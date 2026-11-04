@@ -1,626 +1,240 @@
 <!DOCTYPE html>
-<html lang="fr" class="dark h-full">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pour Sadeck 💌</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        rosegold: {
-                            100: '#fde9eb',
-                            200: '#fbcfe4',
-                            300: '#ffb6c1', /* Powder Pink */
-                            400: '#e58e9a',
-                            500: '#b76e79', /* Rose Gold */
-                            600: '#9b515d',
-                            700: '#800020', /* Burgundy */
-                        },
-                        night: {
-                            900: '#0d0508',
-                            800: '#1a0a10',
-                            700: '#2a111a',
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Montserrat"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12060a">
+<title>Pour Sadeck 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#12060a; --wine:#3b0f1d; --burgundy:#7a1f3a; --rose:#e0909e; --blush:#f7c9d0;
+  --champagne:#ecd0b0; --paper:#f8efe7; --ink:#3a1822; --muted:#b99aa1;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Manrope',system-ui,sans-serif; --script:'Pinyon Script','Snell Roundhand',cursive;
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(90% 60% at 50% 0%,rgba(122,31,58,.55),transparent 70%),
+    radial-gradient(70% 50% at 50% 100%,rgba(236,208,176,.08),transparent 70%),
+    var(--night);
+  color:#f3e4e7; font-family:var(--sans); overflow-x:hidden; touch-action:manipulation;
+  display:flex; flex-direction:column; align-items:center;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+::selection{background:rgba(224,144,158,.35)}
+:focus-visible{outline:2px solid var(--champagne);outline-offset:3px}
+#bg{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 
-    <!-- FontAwesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+/* Header */
+header{width:100%;max-width:560px;padding:18px 22px 0;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:5}
+.from{display:flex;align-items:center;gap:9px;font-size:.78rem;color:var(--muted);letter-spacing:.02em}
+.from i{width:7px;height:7px;border-radius:50%;background:var(--rose);box-shadow:0 0 0 0 rgba(224,144,158,.6);animation:ping 2.4s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(224,144,158,0)}100%{box-shadow:0 0 0 0 rgba(224,144,158,0)}}
+#snd{font:500 .76rem var(--sans);color:var(--blush);background:rgba(255,255,255,.05);border:1px solid rgba(236,208,176,.22);padding:8px 14px;border-radius:99px;cursor:pointer;display:flex;gap:8px;align-items:center;backdrop-filter:blur(10px);transition:.3s}
+#snd:hover{background:rgba(255,255,255,.1)}
+#snd .eq{display:flex;gap:2px;align-items:flex-end;height:11px}
+#snd .eq b{width:2px;height:3px;background:currentColor;border-radius:1px}
+#snd.on .eq b{animation:eq 1s ease-in-out infinite}
+#snd.on .eq b:nth-child(2){animation-delay:.2s}#snd.on .eq b:nth-child(3){animation-delay:.4s}
+@keyframes eq{50%{height:11px}}
 
-    <style>
-        /* Modern reset & background styling */
-        body {
-            background-color: #0d0508;
-            color: #e2e8f0;
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            touch-action: manipulation;
-        }
+main{flex:1;width:100%;max-width:480px;padding:22px 18px;position:relative;z-index:5;display:flex;align-items:center}
+.screen{display:none;width:100%;opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.screen.on{display:block}.screen.in{opacity:1;transform:none}
 
-        /* Ambient subtle radial glow - Rose Gold/Burgundy */
-        .ambient-glow {
-            background: radial-gradient(circle at 50% 30%, rgba(183, 110, 121, 0.12) 0%, rgba(13, 5, 8, 0) 75%);
-        }
+/* Screen 1 : envelope */
+#welcome{text-align:center}
+#welcome h1{font:italic 500 clamp(2.5rem,11vw,3.4rem)/1.05 var(--serif);background:linear-gradient(120deg,#fff 10%,var(--blush) 45%,var(--champagne) 90%);-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise 1s .1s both cubic-bezier(.2,.7,.2,1)}
+#welcome p.sub{margin:12px auto 0;max-width:20rem;color:var(--muted);font-size:.95rem;line-height:1.6;animation:rise 1s .3s both cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(22px);filter:blur(6px)}}
+.stage{margin:44px auto 0;width:min(80vw,330px);animation:rise 1.1s .5s both cubic-bezier(.2,.7,.2,1)}
+.env{position:relative;display:block;width:100%;aspect-ratio:1.5;border:0;background:none;cursor:pointer;perspective:1000px;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 28px 34px rgba(0,0,0,.55))}
+@keyframes float{50%{transform:translateY(-9px)}}
+.env>*{position:absolute;inset:0}
+.env .back{background:linear-gradient(160deg,#5e1830,#3b0f1d);border-radius:6px}
+.env .card{inset:9% 7% auto;height:80%;background:var(--paper);border-radius:3px;transition:transform .9s .35s cubic-bezier(.5,0,.2,1);display:flex;align-items:center;justify-content:center;font:italic 1.3rem var(--serif);color:var(--burgundy)}
+.env .front{background:linear-gradient(160deg,#862445,#5a1529);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);border-radius:6px}
+.env .flap{bottom:46%;background:linear-gradient(180deg,#9a2b4f,#74203c);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s cubic-bezier(.5,0,.2,1),z-index 0s .4s;z-index:3;border-radius:6px 6px 0 0}
+.seal{inset:auto;left:50%;top:54%;width:21%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;z-index:4;background:radial-gradient(circle at 35% 30%,#f0a3b1,#b3405c 55%,#7a1f3a);box-shadow:0 4px 12px rgba(0,0,0,.5),inset 0 -3px 6px rgba(0,0,0,.25),inset 0 2px 3px rgba(255,255,255,.35);display:grid;place-items:center;color:#ffe4e9;font:600 1.15rem var(--serif);transition:opacity .35s,scale .35s;animation:beat 2.6s ease-in-out infinite}
+@keyframes beat{0%,60%,100%{scale:1}70%{scale:1.1}80%{scale:1}90%{scale:1.07}}
+.env.open{animation:none}
+.env.open .flap{transform:rotateX(180deg);z-index:0}
+.env.open .seal{opacity:0;scale:.4;animation:none}
+.env.open .card{transform:translateY(-34%)}
+.hint{margin-top:30px;font-size:.84rem;color:var(--muted);animation:rise 1s 1.1s both}
 
-        /* Ultra-refined Glassmorphism */
-        .glass-card {
-            background: rgba(26, 10, 16, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(183, 110, 121, 0.15);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
+/* Screen 2 : letter */
+.paper{position:relative;background:linear-gradient(180deg,#fbf4ee,var(--paper));color:var(--ink);border-radius:6px;padding:34px 28px 26px;box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 0 1px rgba(236,208,176,.35);background-image:repeating-linear-gradient(transparent 0 33px,rgba(122,31,58,.07) 33px 34px)}
+.paper::before{content:"";position:absolute;inset:0;border-radius:6px;background:linear-gradient(180deg,#fbf4ee,var(--paper));z-index:-1}
+.paper>*{position:relative}
+.dear{font:2.1rem/1 var(--script);color:var(--burgundy)}
+.body{margin-top:18px;min-height:190px;font:500 1.28rem/1.62 var(--serif)}
+.cur{display:inline-block;width:2px;height:1.05em;background:var(--burgundy);vertical-align:-.15em;margin-left:2px;animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.sign{margin-top:8px;text-align:right;font:2rem/1 var(--script);color:var(--burgundy);opacity:0;transition:opacity 1s}
+.sign.in{opacity:1}
+.more{margin-top:20px;border-top:1px dashed rgba(122,31,58,.3);padding-top:6px;opacity:0;transition:opacity .8s}
+.more.in{opacity:1}
+.acc button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:13px 2px;background:none;border:0;font:italic 500 1.2rem var(--serif);color:var(--burgundy);cursor:pointer;text-align:left}
+.acc button svg{width:16px;height:16px;transition:transform .35s}
+.acc.open button svg{transform:rotate(180deg)}
+.acc .pane{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.acc.open .pane{grid-template-rows:1fr}
+.acc .pane>div{overflow:hidden}
+.acc p{padding:0 2px 14px;font:500 1.12rem/1.55 var(--serif);color:#5a3540}
+.acc+.acc{border-top:1px solid rgba(122,31,58,.12)}
 
-        .glass-card-rose {
-            background: rgba(183, 110, 121, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(183, 110, 121, 0.25);
-        }
+.ask{margin-top:22px;text-align:center;opacity:0;transform:translateY(12px);transition:.8s;pointer-events:none}
+.ask.in{opacity:1;transform:none;pointer-events:auto}
+.ask h3{font:italic 500 1.85rem/1.15 var(--serif);color:#fff}
+.ask small{display:block;margin:8px 0 20px;color:var(--muted);font-size:.8rem}
+.btns{display:flex;flex-direction:column;gap:12px}
+.yes{position:relative;overflow:hidden;border:0;cursor:pointer;padding:17px 22px;border-radius:99px;font:600 .95rem var(--sans);color:#2b0b15;background:linear-gradient(120deg,var(--blush),var(--champagne));box-shadow:0 10px 34px rgba(224,144,158,.35);transition:transform .25s,box-shadow .25s}
+.yes::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.7) 50%,transparent 70%);translate:-120% 0;animation:shine 3.2s 1s infinite}
+@keyframes shine{40%,100%{translate:120% 0}}
+.yes:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(224,144,158,.5)}
+.no{cursor:pointer;padding:14px 22px;border-radius:99px;background:transparent;border:1px solid rgba(236,208,176,.25);color:var(--muted);font:500 .88rem var(--sans);transition:.25s}
+.no:hover{color:var(--blush);border-color:rgba(224,144,158,.5)}
 
-        /* Rose Gold gradient text */
-        .rosegold-gradient-text {
-            background: linear-gradient(135deg, #fff 0%, #ffb6c1 30%, #b76e79 70%, #800020 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* Screen 3 */
+#thanks{text-align:center}
+#thanks svg{width:92px;height:92px;filter:drop-shadow(0 0 28px rgba(224,144,158,.6));animation:beat 1.6s ease-in-out infinite}
+#thanks h2{margin-top:22px;font:italic 500 clamp(2.4rem,10vw,3.2rem)/1.05 var(--serif);background:linear-gradient(120deg,#fff,var(--blush),var(--champagne));-webkit-background-clip:text;background-clip:text;color:transparent}
+#thanks p{margin:14px auto 0;max-width:22rem;color:#d9c3c8;line-height:1.7;font-size:.98rem}
 
-        /* Typewriter Cursor animation */
-        .typing-cursor::after {
-            content: '|';
-            animation: blink 0.8s infinite;
-            color: #b76e79;
-            font-weight: 300;
-        }
+footer{width:100%;padding:12px 18px 18px;text-align:center;font-size:.72rem;color:#7d6168;position:relative;z-index:5}
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Smooth Accordions */
-        .accordion-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
-        }
-
-        .accordion-content.open {
-            max-height: 200px;
-            opacity: 1;
-        }
-
-        /* Canvas fixed background */
-        #bgCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Glowing pulses */
-        .glow-button {
-            box-shadow: 0 0 20px rgba(183, 110, 121, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .glow-button:hover, .glow-button:active {
-            box-shadow: 0 0 35px rgba(183, 110, 121, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0d0508;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(183, 110, 121, 0.3);
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(183, 110, 121, 0.5);
-        }
-    </style>
+@media(min-width:520px){.btns{flex-direction:row;justify-content:center}.yes{flex:1.4}.no{flex:1}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01s!important}}
+</style>
 </head>
-<body class="h-full flex flex-col justify-between items-center text-slate-200 selection:bg-rosegold-500/30 selection:text-rosegold-100">
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
 
-    <!-- Interactive Particle Background Canvas -->
-    <canvas id="bgCanvas"></canvas>
+<header>
+  <div class="from"><i></i>De la part de Rachel</div>
+  <button id="snd" type="button" aria-pressed="false"><span class="eq"><b></b><b></b><b></b></span><span id="sndT">Musique</span></button>
+</header>
 
-    <!-- Ambient background glow -->
-    <div class="fixed inset-0 ambient-glow pointer-events-none z-0"></div>
+<main>
+  <section id="welcome" class="screen on in">
+    <h1>Pour toi, Sadeck</h1>
+    <p class="sub">Un message écrit avec le cœur, en toute sincérité.</p>
+    <div class="stage">
+      <button id="open" class="env" type="button" aria-label="Ouvrir la lettre">
+        <span class="back"></span>
+        <span class="card">Sadeck</span>
+        <span class="front"></span>
+        <span class="flap"></span>
+        <span class="seal">R</span>
+      </button>
+    </div>
+    <p class="hint">Touche l’enveloppe pour l’ouvrir</p>
+  </section>
 
-    <!-- Top Navigation / Controls -->
-    <header class="w-full max-w-2xl px-6 pt-6 flex justify-between items-center z-20">
-        <div class="flex items-center space-x-2">
-            <span class="w-2 h-2 rounded-full bg-rosegold-400 animate-pulse"></span>
-            <span class="text-xs uppercase tracking-widest text-rosegold-400/80 font-medium">De la part de Rachel</span>
+  <section id="letter" class="screen">
+    <article class="paper">
+      <h2 class="dear">Cher Sadeck,</h2>
+      <p class="body"><span id="tw"></span><span class="cur" id="cur"></span></p>
+      <p class="sign" id="sign">Rachel</p>
+      <div class="more" id="more">
+        <div class="acc">
+          <button type="button" aria-expanded="false">Ma sincérité
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l5 5 5-5"/></svg></button>
+          <div class="pane"><div><p>Je n’ai jamais voulu te blesser. Tu as une place précieuse pour moi et cette situation me pèse énormément.</p></div></div>
         </div>
-
-        <!-- Ambient Sound Toggle (Web Audio API) -->
-        <button id="audioToggleBtn" class="flex items-center space-x-2 bg-night-800/80 hover:bg-night-700 text-slate-300 hover:text-rosegold-300 border border-rosegold-500/30 px-3 py-1.5 rounded-full text-xs transition-all backdrop-blur-md">
-            <i id="audioIcon" class="fa-solid fa-volume-xmark text-slate-400"></i>
-            <span id="audioText">Musique OFF</span>
-        </button>
-    </header>
-
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="w-full max-w-lg px-4 py-8 z-10 flex-grow flex flex-col justify-center items-center">
-
-        <!-- ================= ECRAN 1 : WELCOME COVER ================= -->
-        <section id="welcomeSection" class="w-full text-center space-y-8 transition-all duration-700 ease-out transform translate-y-0 opacity-100">
-            <div class="relative inline-block">
-                <!-- Decorative Rose Gold Rings -->
-                <div class="absolute -inset-4 rounded-full bg-rosegold-500/20 blur-xl animate-pulse"></div>
-                <div class="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full glass-card border border-rosegold-500/40 flex items-center justify-center relative">
-                    <i class="fa-solid fa-envelope-open-text text-3xl sm:text-4xl text-rosegold-400"></i>
-                </div>
-            </div>
-
-            <div class="space-y-3">
-                <h1 class="text-3xl sm:text-4xl font-serif font-medium tracking-wide rosegold-gradient-text">
-                    Pour toi, Sadeck
-                </h1>
-                <p class="text-sm sm:text-base text-slate-400 font-light max-w-xs mx-auto leading-relaxed">
-                    Un message écrit avec le cœur, en toute sincérité.
-                </p>
-            </div>
-
-            <div class="pt-4">
-                <button id="openMessageBtn" class="glow-button w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-rosegold-600 via-rosegold-500 to-rosegold-400 text-white font-semibold tracking-wide text-sm flex items-center justify-center space-x-3 mx-auto group">
-                    <span>Ouvrir la lettre</span>
-                    <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- ================= ECRAN 2 : MAIN APOLOGY CARD ================= -->
-        <section id="letterSection" class="w-full hidden opacity-0 translate-y-6 transition-all duration-700 ease-out space-y-6">
-            
-            <!-- Letter Card -->
-            <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
-                <!-- Subtle Top Accent Light -->
-                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-rosegold-400/50 to-transparent"></div>
-
-                <!-- Header -->
-                <div class="flex justify-between items-baseline border-b border-white/5 pb-4">
-                    <h2 class="text-xl font-serif text-rosegold-400 font-medium">Cher Sadeck,</h2>
-                    <span class="text-xs text-slate-400 tracking-wider font-medium italic">~ Rachel</span>
-                </div>
-
-                <!-- Typewriter Container -->
-                <div class="min-h-[140px] text-sm sm:text-base text-slate-300 leading-relaxed space-y-4">
-                    <p id="typewriterText" class="typing-cursor inline"></p>
-                </div>
-
-                <!-- Accordions / Promesses -->
-                <div id="accordionGroup" class="pt-4 border-t border-white/5 space-y-3 hidden opacity-0 transition-opacity duration-500">
-                    <p class="text-xs font-semibold uppercase tracking-widest text-rosegold-400/80 mb-2">
-                        Ce que je tenais à te dire
-                    </p>
-
-                    <!-- Accordion Item 1 -->
-                    <div class="glass-card-rose rounded-xl overflow-hidden transition-all">
-                        <button class="accordion-header w-full px-4 py-3.5 flex justify-between items-center text-left text-xs sm:text-sm font-medium text-slate-200 hover:text-rosegold-300">
-                            <span class="flex items-center space-x-2">
-                                <i class="fa-solid fa-heart text-rosegold-500/70 text-xs"></i>
-                                <span>Ma sincérité</span>
-                            </span>
-                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-300"></i>
-                        </button>
-                        <div class="accordion-content px-4 text-xs text-slate-400 leading-relaxed space-y-2">
-                            <p class="pb-3">Je n'ai jamais voulu te blesser. Tu as une place précieuse pour moi et cette situation me pèse énormément.</p>
-                        </div>
-                    </div>
-
-                    <!-- Accordion Item 2 -->
-                    <div class="glass-card-rose rounded-xl overflow-hidden transition-all">
-                        <button class="accordion-header w-full px-4 py-3.5 flex justify-between items-center text-left text-xs sm:text-sm font-medium text-slate-200 hover:text-rosegold-300">
-                            <span class="flex items-center space-x-2">
-                                <i class="fa-solid fa-leaf text-rosegold-500/70 text-xs"></i>
-                                <span>Ma promesse</span>
-                            </span>
-                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-300"></i>
-                        </button>
-                        <div class="accordion-content px-4 text-xs text-slate-400 leading-relaxed space-y-2">
-                            <p class="pb-3">Je m'engage à être plus à l'écoute et à faire attention à ce que cela ne se reproduise plus.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question & Decision Buttons -->
-            <div id="decisionCard" class="glass-card rounded-3xl p-6 text-center space-y-5 hidden opacity-0 transition-opacity duration-500 relative">
-                <h3 class="text-base sm:text-lg font-serif text-slate-200 font-medium">
-                    Accepterais-tu mes excuses ?
-                </h3>
-                <p class="text-xs text-slate-400 mb-4">Ta réponse m'enverra directement un message sur WhatsApp.</p>
-
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-                    <!-- YES BUTTON (Redirects to WhatsApp) -->
-                    <button id="yesBtn" class="glow-button w-full sm:w-auto px-6 py-3.5 rounded-full bg-gradient-to-r from-rosegold-500 to-rosegold-400 text-white font-semibold text-sm transition-all duration-300 flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-check"></i>
-                        <span>J'accepte tes excuses</span>
-                    </button>
-
-                    <!-- NO BUTTON (Redirects to WhatsApp) -->
-                    <button id="noBtn" class="w-full sm:w-auto px-6 py-3.5 rounded-full bg-night-800 hover:bg-night-700 text-rosegold-200 border border-rosegold-700/50 text-sm font-medium transition-all duration-200 flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-xmark"></i>
-                        <span>Je refuse</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= ECRAN 3 : THANK YOU (Optional flow if Yes) ================= -->
-        <section id="thankYouSection" class="w-full hidden opacity-0 translate-y-6 transition-all duration-700 ease-out text-center space-y-6">
-            <div class="glass-card rounded-3xl p-8 sm:p-10 space-y-6 relative overflow-hidden">
-                <div class="w-20 h-20 mx-auto rounded-full bg-rosegold-500/10 border border-rosegold-500/30 flex items-center justify-center">
-                    <i class="fa-solid fa-heart text-3xl text-rosegold-400 animate-bounce"></i>
-                </div>
-
-                <div class="space-y-3">
-                    <h2 class="text-2xl sm:text-3xl font-serif rosegold-gradient-text font-medium">
-                        Merci du fond du cœur
-                    </h2>
-                    <p class="text-sm text-slate-300 leading-relaxed max-w-sm mx-auto">
-                        Ton pardon signifie énormément pour moi, Sadeck. J'attends ton message sur WhatsApp avec impatience. ✨
-                    </p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="w-full py-4 text-center text-[11px] text-slate-500 z-10">
-        Fait avec sincérité par Rachel pour Sadeck
-    </footer>
-
-    <!-- JS Logic -->
-    <script>
-        /* ===================================================================
-           1. PARTICLES CANVAS ENGINE (Soft Powder Pink / Rose Gold Dust)
-           =================================================================== */
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let particles = [];
-        let celebrationParticles = [];
-        let isCelebrating = false;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor(isColor = false) {
-                this.reset(isColor);
-            }
-
-            reset(isColor = false) {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.radius = Math.random() * (isColor ? 2.5 : 1.2) + 0.5;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = -Math.random() * 0.4 - 0.1;
-                this.alpha = Math.random() * 0.5 + 0.1;
-                this.maxAlpha = this.alpha;
-                this.alphaVel = Math.random() * 0.005 + 0.002;
-                // Mix of Rose Gold and soft white
-                this.color = isColor ? (Math.random() > 0.5 ? '#b76e79' : '#ffb6c1') : '#ffffff';
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Pulsing light intensity
-                this.alpha += this.alphaVel;
-                if (this.alpha > this.maxAlpha || this.alpha < 0.05) {
-                    this.alphaVel = -this.alphaVel;
-                }
-
-                if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) {
-                    this.reset(Math.random() > 0.5);
-                    this.y = canvas.height + 10;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = Math.max(0, this.alpha);
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fill();
-
-                if (this.radius > 1.5) {
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = this.color;
-                }
-                ctx.restore();
-            }
-        }
-
-        // Celebration Sparkle Class
-        class CelebrationSparkle {
-            constructor() {
-                this.x = canvas.width / 2;
-                this.y = canvas.height / 2;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 6 + 2;
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed - 2;
-                this.gravity = 0.1;
-                this.radius = Math.random() * 3 + 1.5;
-                this.alpha = 1;
-                this.decay = Math.random() * 0.015 + 0.008;
-                this.color = ['#b76e79', '#ffb6c1', '#ffffff', '#e58e9a'][Math.floor(Math.random() * 4)];
-            }
-
-            update() {
-                this.vx *= 0.98;
-                this.vy += this.gravity;
-                this.x += this.vx;
-                this.y += this.vy;
-                this.alpha -= this.decay;
-            }
-
-            draw() {
-                if (this.alpha <= 0) return;
-                ctx.save();
-                ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 12;
-                ctx.shadowColor = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        // Initialize particles
-        for (let i = 0; i < 60; i++) {
-            particles.push(new Particle(i % 2 === 0));
-        }
-
-        function triggerCelebration() {
-            isCelebrating = true;
-            celebrationParticles = [];
-            for (let i = 0; i < 150; i++) {
-                celebrationParticles.push(new CelebrationSparkle());
-            }
-        }
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw ambient particles
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            // Draw celebration particles if active
-            if (isCelebrating) {
-                for (let i = celebrationParticles.length - 1; i >= 0; i--) {
-                    const sp = celebrationParticles[i];
-                    sp.update();
-                    sp.draw();
-                    if (sp.alpha <= 0) {
-                        celebrationParticles.splice(i, 1);
-                    }
-                }
-            }
-
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-
-
-        /* ===================================================================
-           2. AUDIO SYNTHESIZER (Web Audio API - Gentle Soft Chords)
-           =================================================================== */
-        let audioCtx = null;
-        let isMuted = true;
-        let intervalId = null;
-
-        const notes = [261.63, 329.63, 392.00, 493.88]; // Soft chords
-
-        function playAmbientNote() {
-            if (!audioCtx || isMuted) return;
-
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-
-                const freq = notes[Math.floor(Math.random() * notes.length)];
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-                gain.gain.setValueAtTime(0, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.02, audioCtx.currentTime + 2.0); // Softer volume
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 6.0);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                osc.start();
-                osc.stop(audioCtx.currentTime + 6.1);
-            } catch (e) {
-                console.log("Audio play suppressed", e);
-            }
-        }
-
-        function toggleAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-
-            isMuted = !isMuted;
-            const audioIcon = document.getElementById('audioIcon');
-            const audioText = document.getElementById('audioText');
-
-            if (!isMuted) {
-                audioIcon.className = "fa-solid fa-volume-high text-rosegold-400";
-                audioText.innerText = "Musique ON";
-                playAmbientNote();
-                intervalId = setInterval(playAmbientNote, 3000);
-            } else {
-                audioIcon.className = "fa-solid fa-volume-xmark text-slate-400";
-                audioText.innerText = "Musique OFF";
-                if (intervalId) clearInterval(intervalId);
-            }
-        }
-
-        document.getElementById('audioToggleBtn').addEventListener('click', toggleAudio);
-
-
-        /* ===================================================================
-           3. TYPEWRITER EFFECT
-           =================================================================== */
-        const letterContent = "Je voulais prendre le temps de t'écrire ce message avec toute la sincérité du monde. Parce que tu comptes énormément pour moi, je m'en veux de la situation actuelle. Ce n'était absolument pas mon intention de te décevoir, et je tiens du fond du cœur à m'en excuser.";
-
-        const typewriterEl = document.getElementById('typewriterText');
-        const accordionGroup = document.getElementById('accordionGroup');
-        const decisionCard = document.getElementById('decisionCard');
-
-        function startTypewriter(text, index = 0) {
-            if (index < text.length) {
-                typewriterEl.textContent += text.charAt(index);
-                setTimeout(() => startTypewriter(text, index + 1), 35);
-            } else {
-                typewriterEl.classList.remove('typing-cursor');
-
-                accordionGroup.classList.remove('hidden');
-                setTimeout(() => accordionGroup.classList.remove('opacity-0'), 100);
-
-                setTimeout(() => {
-                    decisionCard.classList.remove('hidden');
-                    setTimeout(() => decisionCard.classList.remove('opacity-0'), 100);
-                }, 800);
-            }
-        }
-
-        /* ===================================================================
-           4. NAVIGATION & INTERACTIONS
-           =================================================================== */
-        const welcomeSection = document.getElementById('welcomeSection');
-        const letterSection = document.getElementById('letterSection');
-        const thankYouSection = document.getElementById('thankYouSection');
-        const openMessageBtn = document.getElementById('openMessageBtn');
-
-        openMessageBtn.addEventListener('click', () => {
-            if (isMuted) toggleAudio();
-
-            welcomeSection.classList.add('opacity-0', '-translate-y-6');
-            setTimeout(() => {
-                welcomeSection.classList.add('hidden');
-                letterSection.classList.remove('hidden');
-
-                setTimeout(() => {
-                    letterSection.classList.remove('opacity-0', 'translate-y-6');
-                    startTypewriter(letterContent);
-                }, 100);
-            }, 500);
-        });
-
-        /* Accordion Toggle Logic */
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('.fa-chevron-down');
-
-                document.querySelectorAll('.accordion-content').forEach(c => {
-                    if (c !== content) {
-                        c.classList.remove('open');
-                        c.previousElementSibling.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
-                    }
-                });
-
-                if (content.classList.contains('open')) {
-                    content.classList.remove('open');
-                    icon.style.transform = 'rotate(0deg)';
-                } else {
-                    content.classList.add('open');
-                    icon.style.transform = 'rotate(180deg)';
-                }
-            });
-        });
-
-        /* ===================================================================
-           5. WHATSAPP REDIRECTION LOGIC
-           =================================================================== */
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const phoneNumber = "22872373016";
-
-        function sendWhatsApp(isAccepted) {
-            let message = "";
-            if (isAccepted) {
-                message = "Coucou Rachel, c'est Sadeck. J'ai lu ton message et j'accepte tes excuses... ✨";
-            } else {
-                message = "Salut Rachel, c'est Sadeck. J'ai lu ton message mais je refuse tes excuses...";
-            }
-            
-            const encodedMessage = encodeURIComponent(message);
-            const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            
-            // Open WhatsApp in a new tab
-            window.open(url, '_blank');
-        }
-
-        yesBtn.addEventListener('click', () => {
-            triggerCelebration();
-            sendWhatsApp(true);
-
-            // Show a sweet thank you message on the page as well
-            letterSection.classList.add('opacity-0', '-translate-y-6');
-            setTimeout(() => {
-                letterSection.classList.add('hidden');
-                thankYouSection.classList.remove('hidden');
-
-                setTimeout(() => {
-                    thankYouSection.classList.remove('opacity-0', 'translate-y-6');
-                }, 100);
-            }, 600);
-        });
-
-        noBtn.addEventListener('click', () => {
-            sendWhatsApp(false);
-        });
-    </script>
+        <div class="acc">
+          <button type="button" aria-expanded="false">Ma promesse
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l5 5 5-5"/></svg></button>
+          <div class="pane"><div><p>Je m’engage à être plus à l’écoute et à faire attention à ce que cela ne se reproduise plus.</p></div></div>
+        </div>
+      </div>
+    </article>
+
+    <div class="ask" id="ask">
+      <h3>Accepterais-tu mes excuses ?</h3>
+      <small>Ta réponse m’enverra directement un message sur WhatsApp.</small>
+      <div class="btns">
+        <button id="yes" class="yes" type="button">J’accepte tes excuses</button>
+        <button id="no" class="no" type="button">Je refuse</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="thanks" class="screen">
+    <svg viewBox="0 0 32 29" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7c9d0"/><stop offset="1" stop-color="#b3405c"/></linearGradient></defs><path fill="url(#g)" d="M23.6 0c-3 0-5.4 1.5-6.9 3.8A8.2 8.2 0 0 0 9.4 0C4.2 0 0 4.2 0 9.4c0 11 16 19.6 16 19.6s16-8.6 16-19.6C32 4.2 28.800 0 23.600 0z"/></svg>
+    <h2>Merci du fond du cœur</h2>
+    <p>Ton pardon signifie énormément pour moi, Sadeck. J’attends ton message sur WhatsApp avec impatience. ✨</p>
+  </section>
+</main>
+
+<footer>Fait avec sincérité par Rachel pour Sadeck</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Canvas : poussière dorée + cœurs de célébration ---------- */
+const cv=$('#bg'),cx=cv.getContext('2d');let W,H,dpr;
+function size(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0)}
+addEventListener('resize',size);size();
+const cols=['#f7c9d0','#e0909e','#ecd0b0','#ffffff'];
+class Dust{constructor(){this.r0()}
+  r0(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.6+.4;this.vx=(Math.random()-.5)*.25;this.vy=-Math.random()*.35-.08;this.a=Math.random()*.5;this.da=(Math.random()*.006+.002)*(Math.random()<.5?-1:1);this.c=cols[Math.random()*4|0]}
+  step(){this.x+=this.vx;this.y+=this.vy;this.a+=this.da;if(this.a>.7||this.a<.05)this.da*=-1;if(this.y<-8){this.r0();this.y=H+8}
+    cx.globalAlpha=Math.max(0,this.a);cx.fillStyle=this.c;cx.shadowBlur=this.r>1.3?10:0;cx.shadowColor=this.c;cx.beginPath();cx.arc(this.x,this.y,this.r,0,7);cx.fill()}}
+function heart(x,y,s){cx.beginPath();cx.moveTo(x,y+s*.3);cx.bezierCurveTo(x-s,y-s*.5,x-s*.5,y-s*1.1,x,y-s*.4);cx.bezierCurveTo(x+s*.5,y-s*1.1,x+s,y-s*.5,x,y+s*.3);cx.fill()}
+class Burst{constructor(x,y){const a=Math.random()*6.283,v=Math.random()*7+2;this.x=x;this.y=y;this.vx=Math.cos(a)*v;this.vy=Math.sin(a)*v-3;this.s=Math.random()*7+5;this.a=1;this.d=Math.random()*.012+.006;this.c=cols[Math.random()*3|0];this.rot=0}
+  step(){this.vx*=.985;this.vy+=.11;this.x+=this.vx;this.y+=this.vy;this.a-=this.d;if(this.a<=0)return;cx.globalAlpha=this.a;cx.fillStyle=this.c;cx.shadowBlur=14;cx.shadowColor=this.c;heart(this.x,this.y,this.s)}}
+const dust=Array.from({length:reduce?20:55},()=>new Dust());let burst=[];
+(function loop(){cx.clearRect(0,0,W,H);dust.forEach(p=>p.step());burst=burst.filter(b=>b.a>0);burst.forEach(b=>b.step());cx.globalAlpha=1;cx.shadowBlur=0;requestAnimationFrame(loop)})();
+function celebrate(el){const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;for(let i=0;i<110;i++)burst.push(new Burst(x,y))}
+
+/* ---------- Musique douce (Web Audio) ---------- */
+let ac=null,muted=true,timer=null;const notes=[261.63,329.63,392,493.88,587.33];
+function note(){if(!ac||muted)return;const f=notes[Math.random()*notes.length|0],t=ac.currentTime;
+  [0,4].forEach(det=>{const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;o.detune.value=det;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.018,t+2);g.gain.exponentialRampToValueAtTime(.0001,t+6);
+    o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+6.2)})}
+function sound(){ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();
+  muted=!muted;$('#snd').classList.toggle('on',!muted);$('#snd').setAttribute('aria-pressed',!muted);
+  $('#sndT').textContent=muted?'Musique':'Musique active';clearInterval(timer);if(!muted){note();timer=setInterval(note,2800)}}
+$('#snd').onclick=sound;
+
+/* ---------- Navigation ---------- */
+function go(el){document.querySelectorAll('.screen.on').forEach(s=>{s.classList.remove('in');setTimeout(()=>s.classList.remove('on'),550)});
+  setTimeout(()=>{el.classList.add('on');requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('in')))},580)}
+
+/* ---------- Machine à écrire ---------- */
+const text="Je voulais prendre le temps de t’écrire ce message avec toute la sincérité du monde. Parce que tu comptes énormément pour moi, je m’en veux de la situation actuelle. Ce n’était absolument pas mon intention de te décevoir, et je tiens du fond du cœur à m’en excuser.";
+let i=0,done=false;
+function finish(){if(done)return;done=true;$('#tw').textContent=text;$('#cur').remove();
+  setTimeout(()=>$('#sign').classList.add('in'),200);setTimeout(()=>$('#more').classList.add('in'),700);setTimeout(()=>$('#ask').classList.add('in'),1300)}
+function type(){if(done)return;if(reduce||i>=text.length)return finish();
+  $('#tw').textContent=text.slice(0,++i);const c=text[i-1];setTimeout(type,/[.,]/.test(c)?260:c===' '?34:30)}
+$('.body').addEventListener('click',finish);
+
+/* ---------- Enveloppe ---------- */
+$('#open').onclick=function(){if(this.classList.contains('open'))return;
+  if(muted)sound();this.classList.add('open');
+  setTimeout(()=>{go($('#letter'));setTimeout(type,900)},reduce?0:1700)};
+
+/* ---------- Accordéons ---------- */
+document.querySelectorAll('.acc button').forEach(b=>b.onclick=()=>{
+  const a=b.parentElement,was=a.classList.contains('open');
+  document.querySelectorAll('.acc').forEach(x=>{x.classList.remove('open');x.querySelector('button').setAttribute('aria-expanded',false)});
+  if(!was){a.classList.add('open');b.setAttribute('aria-expanded',true)}});
+
+/* ---------- WhatsApp ---------- */
+const phone="22872373016";
+function wa(ok){const m=ok?"Coucou Rachel, c'est Sadeck. J'ai lu ton message et j'accepte tes excuses... ✨":"Salut Rachel, c'est Sadeck. J'ai lu ton message mais je refuse tes excuses...";
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(m)}`,'_blank')}
+$('#yes').onclick=function(){celebrate(this);wa(true);setTimeout(()=>go($('#thanks')),900)};
+$('#no').onclick=()=>wa(false);
+</script>
 </body>
 </html>
